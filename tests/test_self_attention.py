@@ -18,4 +18,4 @@ print("Output shape:", output.shape)
 
 assert output.shape == (2, 8, 64)
 
-print("Self-attention test passed!")
+print("Causal self-attention test passed!")

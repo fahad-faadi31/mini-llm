@@ -17,8 +17,16 @@ class SelfAttention(nn.Module):
         V = self.value(x)
 
         scores = Q @ K.transpose(-2, -1)
-
         scores = scores / math.sqrt(K.size(-1))
+
+        # Causal mask: prevent looking at future tokens
+        seq_len = x.size(1)
+
+        mask = torch.tril(
+            torch.ones(seq_len, seq_len, device=x.device)
+        )
+
+        scores = scores.masked_fill(mask == 0, float("-inf"))
 
         attention_weights = torch.softmax(scores, dim=-1)
 
