@@ -1,17 +1,18 @@
-from tokenizer.basic_tokenizer import BasicTokenizer
+from tokenizer.basic_tokenizer import BPETokenizer
 
 
-text = "hello world"
+text = "hello hello hello"
 
-tokenizer = BasicTokenizer(text)
+tokenizer = BPETokenizer(text)
+tokenizer.train(num_merges=50)
 
-encoded = tokenizer.encode("hello world")
+encoded = tokenizer.encode(text)
 decoded = tokenizer.decode(encoded)
 
-print("Vocabulary size:", tokenizer.vocab_size)
+print("Original:", text)
 print("Encoded:", encoded)
 print("Decoded:", decoded)
 
-assert decoded == "hello world"
+assert decoded == text
 
 print("Tokenizer test passed!")
