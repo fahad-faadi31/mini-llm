@@ -1,0 +1,6 @@
+Artificial intelligence is a field of computer science.
+Machine learning allows computers to learn patterns from data.
+Deep learning uses neural networks to solve complex problems.
+Transformers are neural network architectures designed to process sequences.
+Large language models learn to predict the next token in a sequence.
+Training a language model requires data, computation, and optimization.
