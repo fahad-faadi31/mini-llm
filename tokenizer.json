@@ -1,0 +1,430 @@
+{
+  "vocab": {
+    " ": 0,
+    " compu": 1,
+    ",": 2,
+    ".": 3,
+    ".\n": 4,
+    "A": 5,
+    "D": 6,
+    "L": 7,
+    "M": 8,
+    "T": 9,
+    "a": 10,
+    "a ": 11,
+    "al": 12,
+    "al ": 13,
+    "an": 14,
+    "ar": 15,
+    "at": 16,
+    "b": 17,
+    "c": 18,
+    "ch": 19,
+    "ci": 20,
+    "comp": 21,
+    "compu": 22,
+    "d": 23,
+    "d ": 24,
+    "d o": 25,
+    "data": 26,
+    "e": 27,
+    "e ": 28,
+    "el": 29,
+    "en": 30,
+    "enc": 31,
+    "ence": 32,
+    "ence.\n": 33,
+    "f": 34,
+    "fi": 35,
+    "g": 36,
+    "ge ": 37,
+    "h": 38,
+    "i": 39,
+    "ig": 40,
+    "in": 41,
+    "ing ": 42,
+    "k": 43,
+    "l": 44,
+    "le": 45,
+    "learn ": 46,
+    "learning ": 47,
+    "m": 48,
+    "n": 49,
+    "ne": 50,
+    "neural ": 51,
+    "o": 52,
+    "om": 53,
+    "or": 54,
+    "p": 55,
+    "qu": 56,
+    "r": 57,
+    "re": 58,
+    "s": 59,
+    "s ": 60,
+    "s to ": 61,
+    "se": 62,
+    "t": 63,
+    "te": 64,
+    "ter": 65,
+    "ti": 66,
+    "to": 67,
+    "to ": 68,
+    "u": 69,
+    "v": 70,
+    "w": 71,
+    "x": 72,
+    "z": 73
+  },
+  "merges": [
+    {
+      "pair": [
+        "s",
+        " "
+      ],
+      "token": "s "
+    },
+    {
+      "pair": [
+        "e",
+        " "
+      ],
+      "token": "e "
+    },
+    {
+      "pair": [
+        "i",
+        "n"
+      ],
+      "token": "in"
+    },
+    {
+      "pair": [
+        "a",
+        "r"
+      ],
+      "token": "ar"
+    },
+    {
+      "pair": [
+        "l",
+        "e"
+      ],
+      "token": "le"
+    },
+    {
+      "pair": [
+        "n",
+        "e"
+      ],
+      "token": "ne"
+    },
+    {
+      "pair": [
+        "t",
+        "e"
+      ],
+      "token": "te"
+    },
+    {
+      "pair": [
+        "e",
+        "n"
+      ],
+      "token": "en"
+    },
+    {
+      "pair": [
+        "o",
+        "m"
+      ],
+      "token": "om"
+    },
+    {
+      "pair": [
+        ".",
+        "\n"
+      ],
+      "token": ".\n"
+    },
+    {
+      "pair": [
+        "t",
+        "o"
+      ],
+      "token": "to"
+    },
+    {
+      "pair": [
+        "a",
+        "t"
+      ],
+      "token": "at"
+    },
+    {
+      "pair": [
+        "a",
+        "l"
+      ],
+      "token": "al"
+    },
+    {
+      "pair": [
+        "en",
+        "c"
+      ],
+      "token": "enc"
+    },
+    {
+      "pair": [
+        "c",
+        "om"
+      ],
+      "token": "com"
+    },
+    {
+      "pair": [
+        "com",
+        "p"
+      ],
+      "token": "comp"
+    },
+    {
+      "pair": [
+        "le",
+        "ar"
+      ],
+      "token": "lear"
+    },
+    {
+      "pair": [
+        "lear",
+        "n"
+      ],
+      "token": "learn"
+    },
+    {
+      "pair": [
+        "to",
+        " "
+      ],
+      "token": "to "
+    },
+    {
+      "pair": [
+        "a",
+        "n"
+      ],
+      "token": "an"
+    },
+    {
+      "pair": [
+        "r",
+        "e"
+      ],
+      "token": "re"
+    },
+    {
+      "pair": [
+        "al",
+        " "
+      ],
+      "token": "al "
+    },
+    {
+      "pair": [
+        "a",
+        " "
+      ],
+      "token": "a "
+    },
+    {
+      "pair": [
+        "e",
+        "l"
+      ],
+      "token": "el"
+    },
+    {
+      "pair": [
+        "d",
+        " "
+      ],
+      "token": "d "
+    },
+    {
+      "pair": [
+        "comp",
+        "u"
+      ],
+      "token": "compu"
+    },
+    {
+      "pair": [
+        "te",
+        "r"
+      ],
+      "token": "ter"
+    },
+    {
+      "pair": [
+        "enc",
+        "e"
+      ],
+      "token": "ence"
+    },
+    {
+      "pair": [
+        "in",
+        "g"
+      ],
+      "token": "ing"
+    },
+    {
+      "pair": [
+        "ing",
+        " "
+      ],
+      "token": "ing "
+    },
+    {
+      "pair": [
+        "s",
+        "e"
+      ],
+      "token": "se"
+    },
+    {
+      "pair": [
+        "o",
+        "r"
+      ],
+      "token": "or"
+    },
+    {
+      "pair": [
+        "q",
+        "u"
+      ],
+      "token": "qu"
+    },
+    {
+      "pair": [
+        "g",
+        "e "
+      ],
+      "token": "ge "
+    },
+    {
+      "pair": [
+        "t",
+        "i"
+      ],
+      "token": "ti"
+    },
+    {
+      "pair": [
+        "f",
+        "i"
+      ],
+      "token": "fi"
+    },
+    {
+      "pair": [
+        "c",
+        "i"
+      ],
+      "token": "ci"
+    },
+    {
+      "pair": [
+        "i",
+        "g"
+      ],
+      "token": "ig"
+    },
+    {
+      "pair": [
+        "d ",
+        "o"
+      ],
+      "token": "d o"
+    },
+    {
+      "pair": [
+        " ",
+        "compu"
+      ],
+      "token": " compu"
+    },
+    {
+      "pair": [
+        "ence",
+        ".\n"
+      ],
+      "token": "ence.\n"
+    },
+    {
+      "pair": [
+        "c",
+        "h"
+      ],
+      "token": "ch"
+    },
+    {
+      "pair": [
+        "learn",
+        "ing "
+      ],
+      "token": "learning "
+    },
+    {
+      "pair": [
+        "s ",
+        "to "
+      ],
+      "token": "s to "
+    },
+    {
+      "pair": [
+        "learn",
+        " "
+      ],
+      "token": "learn "
+    },
+    {
+      "pair": [
+        "d",
+        "at"
+      ],
+      "token": "dat"
+    },
+    {
+      "pair": [
+        "dat",
+        "a"
+      ],
+      "token": "data"
+    },
+    {
+      "pair": [
+        "ne",
+        "u"
+      ],
+      "token": "neu"
+    },
+    {
+      "pair": [
+        "neu",
+        "r"
+      ],
+      "token": "neur"
+    },
+    {
+      "pair": [
+        "neur",
+        "al "
+      ],
+      "token": "neural "
+    }
+  ]
+}

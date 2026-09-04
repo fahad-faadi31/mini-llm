@@ -1,14 +1,10 @@
-import torch
+﻿import torch
 from torch.optim import AdamW
 
 from model.gpt import GPT
 from training.data_loader import load_training_data
 from training.loss import language_model_loss
 
-
-# -----------------------------
-# Configuration
-# -----------------------------
 
 BLOCK_SIZE = 16
 BATCH_SIZE = 8
@@ -18,10 +14,6 @@ NUM_LAYERS = 2
 LEARNING_RATE = 3e-4
 EPOCHS = 10
 
-
-# -----------------------------
-# Load real dataset
-# -----------------------------
 
 loader, tokenizer = load_training_data(
     "data/train.txt",
@@ -34,10 +26,6 @@ vocab_size = len(tokenizer.vocab)
 print("Vocabulary size:", vocab_size)
 print("Number of batches:", len(loader))
 
-
-# -----------------------------
-# Create model
-# -----------------------------
 
 model = GPT(
     vocab_size=vocab_size,
@@ -52,10 +40,6 @@ optimizer = AdamW(
     lr=LEARNING_RATE
 )
 
-
-# -----------------------------
-# Training loop
-# -----------------------------
 
 model.train()
 
@@ -89,3 +73,6 @@ print("Training completed!")
 
 torch.save(model.state_dict(), "model.pth")
 print("Model saved to model.pth")
+
+tokenizer.save("tokenizer.json")
+print("Tokenizer saved to tokenizer.json")

@@ -1,3 +1,4 @@
+﻿import json
 from collections import Counter
 
 
@@ -17,7 +18,6 @@ class BPETokenizer:
         return pairs
 
     def train(self, num_merges=10):
-        # Start with individual characters
         tokens = list(self.text)
 
         for _ in range(num_merges):
@@ -26,15 +26,12 @@ class BPETokenizer:
             if not pairs:
                 break
 
-            # Most frequent pair
             best_pair, count = pairs.most_common(1)[0]
 
-            # Create a new token
             new_token = "".join(best_pair)
 
             self.merges[best_pair] = new_token
 
-            # Merge the pair
             new_tokens = []
             i = 0
 
@@ -52,7 +49,6 @@ class BPETokenizer:
 
             tokens = new_tokens
 
-        # Build vocabulary
         unique_tokens = sorted(set(tokens))
 
         self.vocab = {
@@ -90,3 +86,37 @@ class BPETokenizer:
         }
 
         return "".join(id_to_token[i] for i in token_ids)
+
+    def save(self, file_path):
+        data = {
+            "vocab": self.vocab,
+            "merges": [
+                {
+                    "pair": list(pair),
+                    "token": merged_token
+                }
+                for pair, merged_token in self.merges.items()
+            ]
+        }
+
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+    @classmethod
+    def load(cls, file_path):
+        tokenizer = cls("")
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        tokenizer.vocab = {
+            token: int(token_id)
+            for token, token_id in data["vocab"].items()
+        }
+
+        tokenizer.merges = {
+            tuple(item["pair"]): item["token"]
+            for item in data["merges"]
+        }
+
+        return tokenizer
