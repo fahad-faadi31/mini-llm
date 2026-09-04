@@ -86,3 +86,6 @@ for epoch in range(EPOCHS):
 
 
 print("Training completed!")
+
+torch.save(model.state_dict(), "model.pth")
+print("Model saved to model.pth")
