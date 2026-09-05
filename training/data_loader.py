@@ -1,13 +1,22 @@
 ﻿import torch
 from torch.utils.data import Dataset, DataLoader
-
 from tokenizer.basic_tokenizer import BPETokenizer
-from training.dataset import create_sequences
 
 
 class TextDataset(Dataset):
-    def __init__(self, tokens, block_size):
-        self.inputs, self.targets = create_sequences(tokens, block_size)
+    def __init__(self, tokens, block_size, stride=None):
+        if stride is None:
+            stride = block_size
+
+        inputs = []
+        targets = []
+
+        for i in range(0, len(tokens) - block_size, stride):
+            inputs.append(tokens[i:i + block_size])
+            targets.append(tokens[i + 1:i + block_size + 1])
+
+        self.inputs = torch.tensor(inputs, dtype=torch.long)
+        self.targets = torch.tensor(targets, dtype=torch.long)
 
     def __len__(self):
         return len(self.inputs)
@@ -20,7 +29,8 @@ def load_training_data(
     file_path,
     block_size,
     batch_size,
-    train_ratio=0.9
+    train_ratio=0.9,
+    stride=None
 ):
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
@@ -37,24 +47,28 @@ def load_training_data(
 
     train_dataset = TextDataset(
         train_tokens,
-        block_size
+        block_size,
+        stride
     )
 
     val_dataset = TextDataset(
         val_tokens,
-        block_size
+        block_size,
+        stride
     )
 
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
-        shuffle=True
+        shuffle=True,
+        pin_memory=torch.cuda.is_available()
     )
 
     val_loader = DataLoader(
         val_dataset,
         batch_size=batch_size,
-        shuffle=False
+        shuffle=False,
+        pin_memory=torch.cuda.is_available()
     )
 
     return train_loader, val_loader, tokenizer

@@ -1,42 +1,37 @@
 ﻿import torch
-
 from model.gpt import GPT
 from training.data_loader import load_training_data
-from training.loss import language_model_loss
 from evaluation.metrics import calculate_loss, calculate_perplexity
 
 
 DATA_PATH = "data/train.txt"
-
 BLOCK_SIZE = 16
-BATCH_SIZE = 8
-
+BATCH_SIZE = 64
 EMBEDDING_DIM = 64
 HIDDEN_DIM = 256
 NUM_LAYERS = 2
-
 LEARNING_RATE = 3e-4
 EPOCHS = 10
-
 MODEL_PATH = "model.pth"
 TOKENIZER_PATH = "tokenizer.json"
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Device: {device}")
 
-print("Device:", device)
 
 train_loader, val_loader, tokenizer = load_training_data(
     DATA_PATH,
-    block_size=BLOCK_SIZE,
-    batch_size=BATCH_SIZE
+    BLOCK_SIZE,
+    BATCH_SIZE,
+    stride=BLOCK_SIZE
 )
 
 vocab_size = len(tokenizer.vocab)
 
-print("Vocabulary size:", vocab_size)
-print("Training batches:", len(train_loader))
-print("Validation batches:", len(val_loader))
+print(f"Vocabulary size: {vocab_size}")
+print(f"Training batches: {len(train_loader)}")
+print(f"Validation batches: {len(val_loader)}")
 
 
 model = GPT(
@@ -58,14 +53,10 @@ best_val_loss = float("inf")
 
 
 for epoch in range(EPOCHS):
-
     model.train()
-
     total_train_loss = 0.0
-    train_batches = 0
 
     for inputs, targets in train_loader:
-
         inputs = inputs.to(device)
         targets = targets.to(device)
 
@@ -73,19 +64,17 @@ for epoch in range(EPOCHS):
 
         logits = model(inputs)
 
-        loss = language_model_loss(
-            logits,
-            targets
+        loss = torch.nn.functional.cross_entropy(
+            logits.view(-1, logits.size(-1)),
+            targets.view(-1)
         )
 
         loss.backward()
-
         optimizer.step()
 
         total_train_loss += loss.item()
-        train_batches += 1
 
-    train_loss = total_train_loss / train_batches
+    avg_train_loss = total_train_loss / len(train_loader)
 
     val_loss = calculate_loss(
         model,
@@ -97,18 +86,14 @@ for epoch in range(EPOCHS):
 
     print(
         f"Epoch {epoch + 1}/{EPOCHS} - "
-        f"Train Loss: {train_loss:.4f} - "
+        f"Train Loss: {avg_train_loss:.4f} - "
         f"Val Loss: {val_loss:.4f} - "
         f"Perplexity: {perplexity:.2f}"
     )
 
     if val_loss < best_val_loss:
         best_val_loss = val_loss
-
-        torch.save(
-            model.state_dict(),
-            MODEL_PATH
-        )
+        torch.save(model.state_dict(), MODEL_PATH)
 
         print(
             f"  ✓ Best model saved! "
@@ -116,9 +101,8 @@ for epoch in range(EPOCHS):
         )
 
 
-print("Training completed!")
-print(f"Best validation loss: {best_val_loss:.4f}")
-
 tokenizer.save(TOKENIZER_PATH)
 
+print("Training completed!")
+print(f"Best validation loss: {best_val_loss:.4f}")
 print(f"Tokenizer saved to {TOKENIZER_PATH}")
