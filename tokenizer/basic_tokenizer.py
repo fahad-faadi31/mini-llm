@@ -3,7 +3,7 @@ from collections import Counter
 
 
 class BPETokenizer:
-    def __init__(self, text):
+    def __init__(self, text=""):
         self.text = text
         self.vocab = {}
         self.merges = {}
@@ -12,8 +12,7 @@ class BPETokenizer:
         pairs = Counter()
 
         for i in range(len(tokens) - 1):
-            pair = (tokens[i], tokens[i + 1])
-            pairs[pair] += 1
+            pairs[(tokens[i], tokens[i + 1])] += 1
 
         return pairs
 
@@ -26,8 +25,7 @@ class BPETokenizer:
             if not pairs:
                 break
 
-            best_pair, count = pairs.most_common(1)[0]
-
+            best_pair, _ = pairs.most_common(1)[0]
             new_token = "".join(best_pair)
 
             self.merges[best_pair] = new_token
@@ -49,11 +47,16 @@ class BPETokenizer:
 
             tokens = new_tokens
 
-        unique_tokens = sorted(set(tokens))
+        # IMPORTANT:
+        # Vocabulary must contain the original characters too.
+        base_tokens = set(self.text)
+        merged_tokens = set(self.merges.values())
+
+        all_tokens = sorted(base_tokens | merged_tokens)
 
         self.vocab = {
             token: i
-            for i, token in enumerate(unique_tokens)
+            for i, token in enumerate(all_tokens)
         }
 
     def encode(self, text):
@@ -77,12 +80,19 @@ class BPETokenizer:
 
             tokens = new_tokens
 
+        unknown = [token for token in tokens if token not in self.vocab]
+
+        if unknown:
+            raise ValueError(
+                f"Unknown tokens: {unknown}"
+            )
+
         return [self.vocab[token] for token in tokens]
 
     def decode(self, token_ids):
         id_to_token = {
-            i: token
-            for token, i in self.vocab.items()
+            token_id: token
+            for token, token_id in self.vocab.items()
         }
 
         return "".join(id_to_token[i] for i in token_ids)
