@@ -26,7 +26,6 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 print("Device:", device)
 
-
 train_loader, val_loader, tokenizer = load_training_data(
     DATA_PATH,
     block_size=BLOCK_SIZE,
@@ -53,6 +52,9 @@ optimizer = torch.optim.AdamW(
     model.parameters(),
     lr=LEARNING_RATE
 )
+
+
+best_val_loss = float("inf")
 
 
 for epoch in range(EPOCHS):
@@ -83,7 +85,6 @@ for epoch in range(EPOCHS):
         total_train_loss += loss.item()
         train_batches += 1
 
-
     train_loss = total_train_loss / train_batches
 
     val_loss = calculate_loss(
@@ -92,9 +93,7 @@ for epoch in range(EPOCHS):
         device=device
     )
 
-    perplexity = calculate_perplexity(
-        val_loss
-    )
+    perplexity = calculate_perplexity(val_loss)
 
     print(
         f"Epoch {epoch + 1}/{EPOCHS} - "
@@ -103,20 +102,23 @@ for epoch in range(EPOCHS):
         f"Perplexity: {perplexity:.2f}"
     )
 
+    if val_loss < best_val_loss:
+        best_val_loss = val_loss
+
+        torch.save(
+            model.state_dict(),
+            MODEL_PATH
+        )
+
+        print(
+            f"  ✓ Best model saved! "
+            f"Val Loss: {best_val_loss:.4f}"
+        )
+
 
 print("Training completed!")
+print(f"Best validation loss: {best_val_loss:.4f}")
 
-
-torch.save(
-    model.state_dict(),
-    MODEL_PATH
-)
-
-print(f"Model saved to {MODEL_PATH}")
-
-
-tokenizer.save(
-    TOKENIZER_PATH
-)
+tokenizer.save(TOKENIZER_PATH)
 
 print(f"Tokenizer saved to {TOKENIZER_PATH}")
