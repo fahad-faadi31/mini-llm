@@ -5,7 +5,7 @@ from evaluation.metrics import calculate_loss, calculate_perplexity
 
 
 DATA_PATH = "data/train.txt"
-BLOCK_SIZE = 16
+BLOCK_SIZE = 64
 BATCH_SIZE = 64
 EMBEDDING_DIM = 64
 HIDDEN_DIM = 256
@@ -96,7 +96,7 @@ for epoch in range(EPOCHS):
         torch.save(model.state_dict(), MODEL_PATH)
 
         print(
-            f"  ✓ Best model saved! "
+            f"  ? Best model saved! "
             f"Val Loss: {best_val_loss:.4f}"
         )
 
