@@ -1,6 +1,167 @@
-Artificial intelligence is a field of computer science.
-Machine learning allows computers to learn patterns from data.
-Deep learning uses neural networks to solve complex problems.
-Transformers are neural network architectures designed to process sequences.
-Large language models learn to predict the next token in a sequence.
-Training a language model requires data, computation, and optimization.
+﻿Artificial intelligence is a field of computer science focused on creating systems that can perform tasks that normally require human intelligence.
+
+Machine learning is a branch of artificial intelligence that allows computers to learn patterns from data instead of relying entirely on manually written rules.
+
+A machine learning model receives data as input and produces predictions as output. During training, the model adjusts its parameters to reduce the difference between its predictions and the desired targets.
+
+Deep learning uses neural networks with multiple layers to learn complex representations of data.
+
+A neural network is composed of layers of connected mathematical units called neurons. Each neuron receives numerical inputs, applies weights and a bias, and passes the result through an activation function.
+
+Training a neural network usually involves a forward pass, a loss calculation, backpropagation, and an optimization step.
+
+The loss function measures how different the model prediction is from the expected target. A lower training loss generally means the model fits the training data better.
+
+An optimizer updates the parameters of a neural network using gradients calculated during backpropagation.
+
+Gradient descent is an optimization algorithm that moves model parameters in a direction that reduces the loss.
+
+Overfitting happens when a model learns the training data too closely and performs poorly on unseen data.
+
+Validation data is used to estimate how well a trained model generalizes to data that was not used for optimization.
+
+A transformer is a neural network architecture based primarily on attention mechanisms.
+
+Self attention allows each token in a sequence to consider information from other tokens in the same sequence.
+
+In self attention, queries, keys, and values are computed from the input representations.
+
+The attention score is calculated from the similarity between a query and a key. The scores are scaled and converted into probabilities using softmax.
+
+Causal attention prevents a language model from looking at future tokens while predicting the current token.
+
+A causal language model predicts the next token based on the tokens that came before it.
+
+GPT models are decoder-only transformer models trained for autoregressive language generation.
+
+A language model represents text as a sequence of tokens. Tokens can represent characters, subwords, words, or other pieces of text.
+
+Tokenization converts raw text into tokens that can be processed by a neural network.
+
+Byte pair encoding is a subword tokenization method that repeatedly merges frequent pairs of tokens.
+
+Embeddings convert discrete token identifiers into continuous numerical vectors.
+
+Positional embeddings provide information about the position of tokens in a sequence.
+
+A transformer block commonly contains self attention, a feed forward network, normalization layers, and residual connections.
+
+Layer normalization helps stabilize the training of transformer networks.
+
+A feed forward network applies nonlinear transformations independently to each token representation.
+
+Residual connections allow information to flow through deep neural networks more easily.
+
+The hidden representation of a transformer contains contextual information about the tokens in the sequence.
+
+The final language modeling layer converts hidden representations into logits for every token in the vocabulary.
+
+Softmax converts logits into a probability distribution over possible next tokens.
+
+Cross entropy is commonly used as the loss function for next token prediction.
+
+Perplexity is a metric commonly used to evaluate language models. Lower perplexity generally indicates better predictive performance on the evaluation data.
+
+A language model with a large vocabulary can represent many different patterns of text, but it also requires more parameters in its embedding and output layers.
+
+The context window determines how many previous tokens a transformer can consider when making a prediction.
+
+Increasing the context window allows a model to use more previous information, but it also increases computational requirements.
+
+Batch training processes multiple sequences at the same time.
+
+A learning rate controls how large each optimizer update is during training.
+
+A learning rate that is too large can make training unstable, while a learning rate that is too small can make training very slow.
+
+The AdamW optimizer is commonly used for training transformer models.
+
+PyTorch is a popular deep learning framework that provides tensor operations, automatic differentiation, neural network layers, and GPU acceleration.
+
+A tensor is a multidimensional numerical array used as the fundamental data structure in PyTorch.
+
+CUDA allows compatible neural network computations to run on NVIDIA GPUs.
+
+GPU acceleration can significantly reduce training time for transformer models compared with CPU training.
+
+Large language models require substantial amounts of text and computation during pretraining.
+
+The quality and diversity of training data strongly influence the behavior of a language model.
+
+Data preprocessing can include cleaning text, removing unwanted content, normalizing text, and creating training sequences.
+
+A dataset should ideally contain diverse examples that represent the types of language the model is expected to process.
+
+Training and validation data should be separated so that evaluation measures generalization rather than memorization.
+
+A model checkpoint contains the learned parameters of a neural network and can be saved for later inference or continued training.
+
+Inference is the process of using a trained model to produce predictions.
+
+Autoregressive generation repeatedly predicts one token and then feeds that token back into the model to generate the next token.
+
+Greedy decoding selects the token with the highest predicted probability at every generation step.
+
+Temperature can be used during generation to control the randomness of token selection.
+
+Top k sampling restricts sampling to the k most likely next tokens.
+
+Top p sampling selects from the smallest group of tokens whose cumulative probability exceeds a chosen threshold.
+
+Better language generation requires both a capable model and sufficiently large and diverse training data.
+
+Building a language model from scratch is useful for understanding tokenization, embeddings, attention, transformer blocks, optimization, evaluation, and inference.
+
+The goal of an efficient language model is to learn useful patterns while using reasonable amounts of memory and computation.
+
+Improving a language model requires measuring its behavior, identifying bottlenecks, changing one component at a time, and evaluating the result.
+
+A good machine learning workflow includes data preparation, model design, training, validation, evaluation, experimentation, and deployment.
+
+Our mini language model is an educational project designed to demonstrate the main components of a GPT style architecture.
+
+The model begins with token embeddings and positional embeddings. These representations are passed through transformer blocks.
+
+Each transformer block uses causal self attention followed by a feed forward network with residual connections and normalization.
+
+The language model predicts the next token for every position in a sequence.
+
+During training, the input sequence contains tokens from the text and the target sequence contains the same sequence shifted by one position.
+
+For example, if the input sequence contains the tokens for artificial intelligence, the target sequence contains the next token for each position.
+
+The model learns by comparing its predicted token distribution with the target token using cross entropy loss.
+
+As training continues, the optimizer changes the model parameters to reduce the prediction error.
+
+A model should not be judged only by training loss. Validation loss and generation quality are also important.
+
+If training loss decreases while validation loss increases, the model may be overfitting.
+
+Increasing the amount and diversity of training data can improve generalization.
+
+Increasing model size can improve capacity when sufficient training data is available.
+
+Transformer models can be scaled by increasing the embedding dimension, hidden dimension, number of layers, and context length.
+
+Scaling a model also increases memory usage and computation.
+
+Efficient training techniques include mixed precision, gradient accumulation, optimized attention, checkpointing, and GPU acceleration.
+
+Kaggle notebooks can provide access to GPU hardware for experimentation and model training.
+
+A small model can be trained on a limited dataset for educational purposes, while larger models require much more data and computational resources.
+
+The most important goal of this project is to understand how the components of a language model work together.
+
+Understanding the complete pipeline makes it easier to debug, optimize, and eventually build larger language models.
+
+Artificial intelligence systems learn from data, and the quality of their results depends heavily on the quality of their training process.
+
+Machine learning experiments should be reproducible so that different configurations can be compared fairly.
+
+Keeping track of model configurations, datasets, losses, and evaluation results makes experimentation more reliable.
+
+A strong language model is not created by architecture alone. Data, optimization, evaluation, compute, and careful experimentation all matter.
+
+The next stage of our project is to build a stronger training pipeline using a larger dataset and then train the model on GPU hardware.

@@ -16,7 +16,12 @@ class TextDataset(Dataset):
         return self.inputs[index], self.targets[index]
 
 
-def load_training_data(file_path, block_size, batch_size):
+def load_training_data(
+    file_path,
+    block_size,
+    batch_size,
+    train_ratio=0.9
+):
     with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
 
@@ -25,12 +30,31 @@ def load_training_data(file_path, block_size, batch_size):
 
     tokens = tokenizer.encode(text)
 
-    dataset = TextDataset(tokens, block_size)
+    split_index = int(len(tokens) * train_ratio)
 
-    loader = DataLoader(
-        dataset,
+    train_tokens = tokens[:split_index]
+    val_tokens = tokens[split_index:]
+
+    train_dataset = TextDataset(
+        train_tokens,
+        block_size
+    )
+
+    val_dataset = TextDataset(
+        val_tokens,
+        block_size
+    )
+
+    train_loader = DataLoader(
+        train_dataset,
         batch_size=batch_size,
         shuffle=True
     )
 
-    return loader, tokenizer
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=batch_size,
+        shuffle=False
+    )
+
+    return train_loader, val_loader, tokenizer
