@@ -1,4 +1,5 @@
-﻿import torch
+
+import torch
 from model.gpt import GPT
 from training.data_loader import load_training_data
 from evaluation.metrics import calculate_loss, calculate_perplexity
@@ -10,8 +11,10 @@ BATCH_SIZE = 64
 EMBEDDING_DIM = 64
 HIDDEN_DIM = 256
 NUM_LAYERS = 2
+
 LEARNING_RATE = 3e-4
-EPOCHS = 10
+EPOCHS = 20
+
 MODEL_PATH = "model.pth"
 TOKENIZER_PATH = "tokenizer.json"
 
@@ -46,6 +49,12 @@ model = GPT(
 optimizer = torch.optim.AdamW(
     model.parameters(),
     lr=LEARNING_RATE
+)
+
+
+scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+    optimizer,
+    T_max=EPOCHS
 )
 
 
@@ -84,21 +93,30 @@ for epoch in range(EPOCHS):
 
     perplexity = calculate_perplexity(val_loss)
 
+    current_lr = optimizer.param_groups[0]["lr"]
+
     print(
         f"Epoch {epoch + 1}/{EPOCHS} - "
         f"Train Loss: {avg_train_loss:.4f} - "
         f"Val Loss: {val_loss:.4f} - "
-        f"Perplexity: {perplexity:.2f}"
+        f"Perplexity: {perplexity:.2f} - "
+        f"LR: {current_lr:.6f}"
     )
 
     if val_loss < best_val_loss:
         best_val_loss = val_loss
-        torch.save(model.state_dict(), MODEL_PATH)
+
+        torch.save(
+            model.state_dict(),
+            MODEL_PATH
+        )
 
         print(
-            f"  ? Best model saved! "
+            f"  ✓ Best model saved! "
             f"Val Loss: {best_val_loss:.4f}"
         )
+
+    scheduler.step()
 
 
 tokenizer.save(TOKENIZER_PATH)
