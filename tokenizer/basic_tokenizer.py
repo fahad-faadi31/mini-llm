@@ -12,7 +12,14 @@ class BPETokenizer:
         pairs = Counter()
 
         for i in range(len(tokens) - 1):
-            pairs[(tokens[i], tokens[i + 1])] += 1
+            left = tokens[i]
+            right = tokens[i + 1]
+
+            # Never allow a merge that involves a space on either side
+            if " " in left or " " in right:
+                continue
+
+            pairs[(left, right)] += 1
 
         return pairs
 
